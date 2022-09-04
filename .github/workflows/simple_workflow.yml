@@ -1,0 +1,36 @@
+name: Simple Workflow
+on: [push]
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
+      - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
+      - run: echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
+      - name: Check out repository code
+        uses: actions/checkout@v3
+      - run: echo "💡 The ${{ github.repository }} repository has been cloned to the runner."
+      - name: List files in the repository
+        run: |
+          ls ${{ github.workspace }}
+      - name: Set up Go
+        uses: actions/setup-go@v3
+        with:
+          go-version: 1.17.3
+      - name: Install Test Tools
+        run: |
+          pushd "$(mktemp -d)"
+          go install golang.org/x/lint/golint@latest
+          go install github.com/onsi/ginkgo/ginkgo@latest 
+          go get github.com/onsi/gomega/...
+          popd
+      - name: Lint
+        run: |
+          golint ./...          
+      - name: Build
+        run: go build -v ./...
+      - run: echo "🖥️ The workflow is now ready to test your code on the runner."
+      - name: Test
+        run: |
+          ginkgo -r -v --randomizeAllSpecs --randomizeSuites --race --trace
+      - run: echo "🍏 This job's status is ${{ job.status }}."

@@ -12,6 +12,9 @@ var _ = Describe("golanguppercase", func() {
 		It("hello", func() {
 			Expect("HELLO").To(Equal(golanguppercase.Uppercase("hello")))
 		})
+		It("golang", func() {
+			Expect("GOLANG").To(Equal(golanguppercase.Uppercase("golang")))
+		})
 		It("world", func() {
 			Expect("WORLD").To(Equal(golanguppercase.Uppercase("world")))
 		})
