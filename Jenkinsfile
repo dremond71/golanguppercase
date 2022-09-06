@@ -25,12 +25,10 @@ pipeline {
 
         stage('Test') {
             steps {
-                    echo 'Running vetting'
-                    sh 'go vet .'
                     echo 'Running linting'
                     sh 'golint .'
                     echo 'Running test'
-                    sh 'go test -v'
+                    sh 'ginkgo -r -v --randomizeAllSpecs --randomizeSuites --race --trace'
             }
         }
         
