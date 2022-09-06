@@ -6,7 +6,7 @@ pipeline {
 
     environment {
         GO114MODULE = 'on'
-        CGO_ENABLED = 0 
+        CGO_ENABLED = 1 
         GOPATH = "${JENKINS_HOME}/jobs/${JOB_NAME}/builds/${BUILD_ID}"
     }
 
