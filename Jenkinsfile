@@ -11,9 +11,9 @@ pipeline {
     }
 
     stages {        
-        stage('Pre Test') {
+        stage('Install Dependencies') {
             steps {
-                echo 'Installing dependencies'
+                echo 'Installing dependencies...'
                 sh 'go version'
                 sh 'go install golang.org/x/lint/golint@latest'
                 sh 'go install github.com/onsi/ginkgo/ginkgo@latest' 
@@ -23,7 +23,7 @@ pipeline {
         
         stage('Build') {
             steps {
-                echo 'Compiling and building'
+                echo 'Compiling and building...'
                 sh 'go build'
             }
         }
@@ -32,9 +32,10 @@ pipeline {
         stage('Test') {
             steps {
                    withEnv(["PATH+GO=${GOPATH}/bin"]){
-                        echo 'Running linting'
+                        echo 'Linting...'
                         sh 'golint .'
-                        echo 'Running test'
+                        echo ''
+                        echo 'Running tests...'
                         sh 'ginkgo -r -v'
                    }
             }
