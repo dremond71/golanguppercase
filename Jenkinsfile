@@ -4,6 +4,12 @@ pipeline {
         go 'go1.17.3'
     }
 
+    environment {
+        GO114MODULE = 'on'
+        CGO_ENABLED = 0 
+        GOPATH = "${JENKINS_HOME}/jobs/${JOB_NAME}/builds/${BUILD_ID}"
+    }
+
     stages {        
         stage('Pre Test') {
             steps {
@@ -25,10 +31,12 @@ pipeline {
 
         stage('Test') {
             steps {
-                    echo 'Running linting'
-                    sh 'golint .'
-                    echo 'Running test'
-                    sh 'ginkgo -r -v --randomizeAllSpecs --randomizeSuites --race --trace'
+                   withEnv(["PATH+GO=${GOPATH}/bin"]){
+                        echo 'Running linting'
+                        sh 'golint .'
+                        echo 'Running test'
+                        sh 'ginkgo -r -v --randomizeAllSpecs --randomizeSuites --race --trace'
+                   }
             }
         }
         
