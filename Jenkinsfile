@@ -9,7 +9,9 @@ pipeline {
             steps {
                 echo 'Installing dependencies'
                 sh 'go version'
-                sh 'go get -u golang.org/x/lint/golint'
+                sh 'go install golang.org/x/lint/golint@latest'
+                sh 'go install github.com/onsi/ginkgo/ginkgo@latest' 
+                sh 'go get github.com/onsi/gomega/...'
             }
         }
         
