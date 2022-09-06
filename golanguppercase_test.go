@@ -35,5 +35,8 @@ var _ = Describe("golanguppercase", func() {
 		It("222", func() {
 			Expect("222").To(Equal(golanguppercase.Uppercase("222")))
 		})
+		It("333", func() {
+			Expect("333").To(Equal(golanguppercase.Uppercase("333")))
+		})
 	})
 })
